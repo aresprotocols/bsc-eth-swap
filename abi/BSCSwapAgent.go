@@ -4,6 +4,7 @@
 package abi
 
 import (
+	"errors"
 	"math/big"
 	"strings"
 
@@ -17,18 +18,24 @@ import (
 
 // Reference imports to suppress errors if they are not otherwise used.
 var (
+	_ = errors.New
 	_ = big.NewInt
 	_ = strings.NewReader
 	_ = ethereum.NotFound
-	_ = abi.U256
 	_ = bind.Bind
 	_ = common.Big1
 	_ = types.BloomLookup
 	_ = event.NewSubscription
 )
 
+// BSCSwapAgentMetaData contains all meta data concerning the BSCSwapAgent contract.
+var BSCSwapAgentMetaData = &bind.MetaData{
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bep20Impl\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SwapFilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"ethRegisterTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"}],\"name\":\"SwapPairCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"fromAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeAmount\",\"type\":\"uint256\"}],\"name\":\"SwapStarted\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"bep20Implementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"}],\"name\":\"createSwapPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fillETH2BSCSwap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"filledETHTx\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"addresspayable\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"setSwapFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"swapBSC2ETH\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"swapFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"swapMappingBSC2ETH\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"swapMappingETH2BSC\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"addresspayable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+}
+
 // BSCSwapAgentABI is the input ABI used to generate the binding from.
-const BSCSwapAgentABI = "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SwapFilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"ethRegisterTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"}],\"name\":\"SwapPairCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"fromAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeAmount\",\"type\":\"uint256\"}],\"name\":\"SwapStarted\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"bep20Implementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"bep20ProxyAdmin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"filledETHTx\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"addresspayable\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"swapFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"swapMappingBSC2ETH\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"swapMappingETH2BSC\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bep20Impl\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"},{\"internalType\":\"addresspayable\",\"name\":\"ownerAddr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"bep20ProxyAdminAddr\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"addresspayable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"setSwapFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"}],\"name\":\"createSwapPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fillETH2BSCSwap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bep20Addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"swapBSC2ETH\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}]"
+// Deprecated: Use BSCSwapAgentMetaData.ABI instead.
+var BSCSwapAgentABI = BSCSwapAgentMetaData.ABI
 
 // BSCSwapAgent is an auto generated Go binding around an Ethereum contract.
 type BSCSwapAgent struct {
@@ -138,7 +145,7 @@ func bindBSCSwapAgent(address common.Address, caller bind.ContractCaller, transa
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_BSCSwapAgent *BSCSwapAgentRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_BSCSwapAgent *BSCSwapAgentRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _BSCSwapAgent.Contract.BSCSwapAgentCaller.contract.Call(opts, result, method, params...)
 }
 
@@ -157,7 +164,7 @@ func (_BSCSwapAgent *BSCSwapAgentRaw) Transact(opts *bind.TransactOpts, method s
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_BSCSwapAgent *BSCSwapAgentCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_BSCSwapAgent *BSCSwapAgentCallerRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _BSCSwapAgent.Contract.contract.Call(opts, result, method, params...)
 }
 
@@ -174,205 +181,209 @@ func (_BSCSwapAgent *BSCSwapAgentTransactorRaw) Transact(opts *bind.TransactOpts
 
 // Bep20Implementation is a free data retrieval call binding the contract method 0x66fec65c.
 //
-// Solidity: function bep20Implementation() constant returns(address)
+// Solidity: function bep20Implementation() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCaller) Bep20Implementation(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "bep20Implementation")
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "bep20Implementation")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // Bep20Implementation is a free data retrieval call binding the contract method 0x66fec65c.
 //
-// Solidity: function bep20Implementation() constant returns(address)
+// Solidity: function bep20Implementation() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentSession) Bep20Implementation() (common.Address, error) {
 	return _BSCSwapAgent.Contract.Bep20Implementation(&_BSCSwapAgent.CallOpts)
 }
 
 // Bep20Implementation is a free data retrieval call binding the contract method 0x66fec65c.
 //
-// Solidity: function bep20Implementation() constant returns(address)
+// Solidity: function bep20Implementation() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) Bep20Implementation() (common.Address, error) {
 	return _BSCSwapAgent.Contract.Bep20Implementation(&_BSCSwapAgent.CallOpts)
 }
 
-// Bep20ProxyAdmin is a free data retrieval call binding the contract method 0x0344165a.
-//
-// Solidity: function bep20ProxyAdmin() constant returns(address)
-func (_BSCSwapAgent *BSCSwapAgentCaller) Bep20ProxyAdmin(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "bep20ProxyAdmin")
-	return *ret0, err
-}
-
-// Bep20ProxyAdmin is a free data retrieval call binding the contract method 0x0344165a.
-//
-// Solidity: function bep20ProxyAdmin() constant returns(address)
-func (_BSCSwapAgent *BSCSwapAgentSession) Bep20ProxyAdmin() (common.Address, error) {
-	return _BSCSwapAgent.Contract.Bep20ProxyAdmin(&_BSCSwapAgent.CallOpts)
-}
-
-// Bep20ProxyAdmin is a free data retrieval call binding the contract method 0x0344165a.
-//
-// Solidity: function bep20ProxyAdmin() constant returns(address)
-func (_BSCSwapAgent *BSCSwapAgentCallerSession) Bep20ProxyAdmin() (common.Address, error) {
-	return _BSCSwapAgent.Contract.Bep20ProxyAdmin(&_BSCSwapAgent.CallOpts)
-}
-
 // FilledETHTx is a free data retrieval call binding the contract method 0x4e2dc7f1.
 //
-// Solidity: function filledETHTx(bytes32 ) constant returns(bool)
+// Solidity: function filledETHTx(bytes32 ) view returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentCaller) FilledETHTx(opts *bind.CallOpts, arg0 [32]byte) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "filledETHTx", arg0)
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "filledETHTx", arg0)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
 }
 
 // FilledETHTx is a free data retrieval call binding the contract method 0x4e2dc7f1.
 //
-// Solidity: function filledETHTx(bytes32 ) constant returns(bool)
+// Solidity: function filledETHTx(bytes32 ) view returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentSession) FilledETHTx(arg0 [32]byte) (bool, error) {
 	return _BSCSwapAgent.Contract.FilledETHTx(&_BSCSwapAgent.CallOpts, arg0)
 }
 
 // FilledETHTx is a free data retrieval call binding the contract method 0x4e2dc7f1.
 //
-// Solidity: function filledETHTx(bytes32 ) constant returns(bool)
+// Solidity: function filledETHTx(bytes32 ) view returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) FilledETHTx(arg0 [32]byte) (bool, error) {
 	return _BSCSwapAgent.Contract.FilledETHTx(&_BSCSwapAgent.CallOpts, arg0)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "owner")
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "owner")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentSession) Owner() (common.Address, error) {
 	return _BSCSwapAgent.Contract.Owner(&_BSCSwapAgent.CallOpts)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) Owner() (common.Address, error) {
 	return _BSCSwapAgent.Contract.Owner(&_BSCSwapAgent.CallOpts)
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_BSCSwapAgent *BSCSwapAgentCaller) SwapFee(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "swapFee")
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "swapFee")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_BSCSwapAgent *BSCSwapAgentSession) SwapFee() (*big.Int, error) {
 	return _BSCSwapAgent.Contract.SwapFee(&_BSCSwapAgent.CallOpts)
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) SwapFee() (*big.Int, error) {
 	return _BSCSwapAgent.Contract.SwapFee(&_BSCSwapAgent.CallOpts)
 }
 
 // SwapMappingBSC2ETH is a free data retrieval call binding the contract method 0xbe0ace69.
 //
-// Solidity: function swapMappingBSC2ETH(address ) constant returns(address)
+// Solidity: function swapMappingBSC2ETH(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCaller) SwapMappingBSC2ETH(opts *bind.CallOpts, arg0 common.Address) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "swapMappingBSC2ETH", arg0)
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "swapMappingBSC2ETH", arg0)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // SwapMappingBSC2ETH is a free data retrieval call binding the contract method 0xbe0ace69.
 //
-// Solidity: function swapMappingBSC2ETH(address ) constant returns(address)
+// Solidity: function swapMappingBSC2ETH(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentSession) SwapMappingBSC2ETH(arg0 common.Address) (common.Address, error) {
 	return _BSCSwapAgent.Contract.SwapMappingBSC2ETH(&_BSCSwapAgent.CallOpts, arg0)
 }
 
 // SwapMappingBSC2ETH is a free data retrieval call binding the contract method 0xbe0ace69.
 //
-// Solidity: function swapMappingBSC2ETH(address ) constant returns(address)
+// Solidity: function swapMappingBSC2ETH(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) SwapMappingBSC2ETH(arg0 common.Address) (common.Address, error) {
 	return _BSCSwapAgent.Contract.SwapMappingBSC2ETH(&_BSCSwapAgent.CallOpts, arg0)
 }
 
 // SwapMappingETH2BSC is a free data retrieval call binding the contract method 0x60b810f1.
 //
-// Solidity: function swapMappingETH2BSC(address ) constant returns(address)
+// Solidity: function swapMappingETH2BSC(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCaller) SwapMappingETH2BSC(opts *bind.CallOpts, arg0 common.Address) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _BSCSwapAgent.contract.Call(opts, out, "swapMappingETH2BSC", arg0)
-	return *ret0, err
+	var out []interface{}
+	err := _BSCSwapAgent.contract.Call(opts, &out, "swapMappingETH2BSC", arg0)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // SwapMappingETH2BSC is a free data retrieval call binding the contract method 0x60b810f1.
 //
-// Solidity: function swapMappingETH2BSC(address ) constant returns(address)
+// Solidity: function swapMappingETH2BSC(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentSession) SwapMappingETH2BSC(arg0 common.Address) (common.Address, error) {
 	return _BSCSwapAgent.Contract.SwapMappingETH2BSC(&_BSCSwapAgent.CallOpts, arg0)
 }
 
 // SwapMappingETH2BSC is a free data retrieval call binding the contract method 0x60b810f1.
 //
-// Solidity: function swapMappingETH2BSC(address ) constant returns(address)
+// Solidity: function swapMappingETH2BSC(address ) view returns(address)
 func (_BSCSwapAgent *BSCSwapAgentCallerSession) SwapMappingETH2BSC(arg0 common.Address) (common.Address, error) {
 	return _BSCSwapAgent.Contract.SwapMappingETH2BSC(&_BSCSwapAgent.CallOpts, arg0)
 }
 
-// CreateSwapPair is a paid mutator transaction binding the contract method 0x32bd6e31.
+// CreateSwapPair is a paid mutator transaction binding the contract method 0x564a7d33.
 //
-// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, string name, string symbol, uint8 decimals) returns(address)
-func (_BSCSwapAgent *BSCSwapAgentTransactor) CreateSwapPair(opts *bind.TransactOpts, ethTxHash [32]byte, erc20Addr common.Address, name string, symbol string, decimals uint8) (*types.Transaction, error) {
-	return _BSCSwapAgent.contract.Transact(opts, "createSwapPair", ethTxHash, erc20Addr, name, symbol, decimals)
+// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, address bep20Addr) returns(address)
+func (_BSCSwapAgent *BSCSwapAgentTransactor) CreateSwapPair(opts *bind.TransactOpts, ethTxHash [32]byte, erc20Addr common.Address, bep20Addr common.Address) (*types.Transaction, error) {
+	return _BSCSwapAgent.contract.Transact(opts, "createSwapPair", ethTxHash, erc20Addr, bep20Addr)
 }
 
-// CreateSwapPair is a paid mutator transaction binding the contract method 0x32bd6e31.
+// CreateSwapPair is a paid mutator transaction binding the contract method 0x564a7d33.
 //
-// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, string name, string symbol, uint8 decimals) returns(address)
-func (_BSCSwapAgent *BSCSwapAgentSession) CreateSwapPair(ethTxHash [32]byte, erc20Addr common.Address, name string, symbol string, decimals uint8) (*types.Transaction, error) {
-	return _BSCSwapAgent.Contract.CreateSwapPair(&_BSCSwapAgent.TransactOpts, ethTxHash, erc20Addr, name, symbol, decimals)
+// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, address bep20Addr) returns(address)
+func (_BSCSwapAgent *BSCSwapAgentSession) CreateSwapPair(ethTxHash [32]byte, erc20Addr common.Address, bep20Addr common.Address) (*types.Transaction, error) {
+	return _BSCSwapAgent.Contract.CreateSwapPair(&_BSCSwapAgent.TransactOpts, ethTxHash, erc20Addr, bep20Addr)
 }
 
-// CreateSwapPair is a paid mutator transaction binding the contract method 0x32bd6e31.
+// CreateSwapPair is a paid mutator transaction binding the contract method 0x564a7d33.
 //
-// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, string name, string symbol, uint8 decimals) returns(address)
-func (_BSCSwapAgent *BSCSwapAgentTransactorSession) CreateSwapPair(ethTxHash [32]byte, erc20Addr common.Address, name string, symbol string, decimals uint8) (*types.Transaction, error) {
-	return _BSCSwapAgent.Contract.CreateSwapPair(&_BSCSwapAgent.TransactOpts, ethTxHash, erc20Addr, name, symbol, decimals)
+// Solidity: function createSwapPair(bytes32 ethTxHash, address erc20Addr, address bep20Addr) returns(address)
+func (_BSCSwapAgent *BSCSwapAgentTransactorSession) CreateSwapPair(ethTxHash [32]byte, erc20Addr common.Address, bep20Addr common.Address) (*types.Transaction, error) {
+	return _BSCSwapAgent.Contract.CreateSwapPair(&_BSCSwapAgent.TransactOpts, ethTxHash, erc20Addr, bep20Addr)
 }
 
 // FillETH2BSCSwap is a paid mutator transaction binding the contract method 0xe307b931.
@@ -394,27 +405,6 @@ func (_BSCSwapAgent *BSCSwapAgentSession) FillETH2BSCSwap(ethTxHash [32]byte, er
 // Solidity: function fillETH2BSCSwap(bytes32 ethTxHash, address erc20Addr, address toAddress, uint256 amount) returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentTransactorSession) FillETH2BSCSwap(ethTxHash [32]byte, erc20Addr common.Address, toAddress common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _BSCSwapAgent.Contract.FillETH2BSCSwap(&_BSCSwapAgent.TransactOpts, ethTxHash, erc20Addr, toAddress, amount)
-}
-
-// Initialize is a paid mutator transaction binding the contract method 0x358394d8.
-//
-// Solidity: function initialize(address bep20Impl, uint256 fee, address ownerAddr, address bep20ProxyAdminAddr) returns()
-func (_BSCSwapAgent *BSCSwapAgentTransactor) Initialize(opts *bind.TransactOpts, bep20Impl common.Address, fee *big.Int, ownerAddr common.Address, bep20ProxyAdminAddr common.Address) (*types.Transaction, error) {
-	return _BSCSwapAgent.contract.Transact(opts, "initialize", bep20Impl, fee, ownerAddr, bep20ProxyAdminAddr)
-}
-
-// Initialize is a paid mutator transaction binding the contract method 0x358394d8.
-//
-// Solidity: function initialize(address bep20Impl, uint256 fee, address ownerAddr, address bep20ProxyAdminAddr) returns()
-func (_BSCSwapAgent *BSCSwapAgentSession) Initialize(bep20Impl common.Address, fee *big.Int, ownerAddr common.Address, bep20ProxyAdminAddr common.Address) (*types.Transaction, error) {
-	return _BSCSwapAgent.Contract.Initialize(&_BSCSwapAgent.TransactOpts, bep20Impl, fee, ownerAddr, bep20ProxyAdminAddr)
-}
-
-// Initialize is a paid mutator transaction binding the contract method 0x358394d8.
-//
-// Solidity: function initialize(address bep20Impl, uint256 fee, address ownerAddr, address bep20ProxyAdminAddr) returns()
-func (_BSCSwapAgent *BSCSwapAgentTransactorSession) Initialize(bep20Impl common.Address, fee *big.Int, ownerAddr common.Address, bep20ProxyAdminAddr common.Address) (*types.Transaction, error) {
-	return _BSCSwapAgent.Contract.Initialize(&_BSCSwapAgent.TransactOpts, bep20Impl, fee, ownerAddr, bep20ProxyAdminAddr)
 }
 
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
@@ -461,21 +451,21 @@ func (_BSCSwapAgent *BSCSwapAgentTransactorSession) SetSwapFee(fee *big.Int) (*t
 
 // SwapBSC2ETH is a paid mutator transaction binding the contract method 0x1ba3b150.
 //
-// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) returns(bool)
+// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) payable returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentTransactor) SwapBSC2ETH(opts *bind.TransactOpts, bep20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _BSCSwapAgent.contract.Transact(opts, "swapBSC2ETH", bep20Addr, amount)
 }
 
 // SwapBSC2ETH is a paid mutator transaction binding the contract method 0x1ba3b150.
 //
-// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) returns(bool)
+// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) payable returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentSession) SwapBSC2ETH(bep20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _BSCSwapAgent.Contract.SwapBSC2ETH(&_BSCSwapAgent.TransactOpts, bep20Addr, amount)
 }
 
 // SwapBSC2ETH is a paid mutator transaction binding the contract method 0x1ba3b150.
 //
-// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) returns(bool)
+// Solidity: function swapBSC2ETH(address bep20Addr, uint256 amount) payable returns(bool)
 func (_BSCSwapAgent *BSCSwapAgentTransactorSession) SwapBSC2ETH(bep20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _BSCSwapAgent.Contract.SwapBSC2ETH(&_BSCSwapAgent.TransactOpts, bep20Addr, amount)
 }
@@ -650,6 +640,7 @@ func (_BSCSwapAgent *BSCSwapAgentFilterer) ParseOwnershipTransferred(log types.L
 	if err := _BSCSwapAgent.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -812,6 +803,7 @@ func (_BSCSwapAgent *BSCSwapAgentFilterer) ParseSwapFilled(log types.Log) (*BSCS
 	if err := _BSCSwapAgent.contract.UnpackLog(event, "SwapFilled", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -976,6 +968,7 @@ func (_BSCSwapAgent *BSCSwapAgentFilterer) ParseSwapPairCreated(log types.Log) (
 	if err := _BSCSwapAgent.contract.UnpackLog(event, "SwapPairCreated", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -1139,5 +1132,6 @@ func (_BSCSwapAgent *BSCSwapAgentFilterer) ParseSwapStarted(log types.Log) (*BSC
 	if err := _BSCSwapAgent.contract.UnpackLog(event, "SwapStarted", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }

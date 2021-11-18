@@ -13,6 +13,8 @@ import (
 type Executor interface {
 	GetBlockAndTxEvents(height int64) (*common.BlockAndEventLogs, error)
 	GetChainName() string
+	GetExplorerUrl() string
+	GetTokenBalance(contract ethcmm.Address, who ethcmm.Address) (*big.Int, error)
 }
 
 // ===================  SwapStarted =============
@@ -46,7 +48,7 @@ func (ev *ETH2BSCSwapStartedEvent) ToSwapStartTxLog(log *types.Log) *model.SwapS
 func ParseETH2BSCSwapStartEvent(abi *abi.ABI, log *types.Log) (*ETH2BSCSwapStartedEvent, error) {
 	var ev ETH2BSCSwapStartedEvent
 
-	err := abi.Unpack(&ev, SwapStartedEventName, log.Data)
+	err := abi.UnpackIntoInterface(&ev, SwapStartedEventName, log.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +84,7 @@ func (ev *BSC2ETHSwapStartedEvent) ToSwapStartTxLog(log *types.Log) *model.SwapS
 func ParseBSC2ETHSwapStartEvent(abi *abi.ABI, log *types.Log) (*BSC2ETHSwapStartedEvent, error) {
 	var ev BSC2ETHSwapStartedEvent
 
-	err := abi.Unpack(&ev, SwapStartedEventName, log.Data)
+	err := abi.UnpackIntoInterface(&ev, SwapStartedEventName, log.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -94,24 +96,25 @@ func ParseBSC2ETHSwapStartEvent(abi *abi.ABI, log *types.Log) (*BSC2ETHSwapStart
 	return &ev, nil
 }
 
-
 // =================  SwapPairRegister ===================
 var (
 	SwapPairRegisterEventName = "SwapPairRegister"
-	SwapPairRegisterEventHash = ethcmm.HexToHash("0xfe3bd005e346323fa452df8cafc28c55b99e3766ba8750571d139c6cf5bc08a0")
+	SwapPairRegisterEventHash = ethcmm.HexToHash("0x2bf34a4c27e048d089386ccfb7b7d28131d7107d7b168300bf4f48a66b3b0b14")
 )
 
 type SwapPairRegisterEvent struct {
-	Sponsor      ethcmm.Address
-	ContractAddr ethcmm.Address
-	Name         string
-	Symbol       string
-	Decimals     uint8
+	Sponsor            ethcmm.Address
+	ContractAddr       ethcmm.Address
+	TargetContractAddr ethcmm.Address
+	Name               string
+	Symbol             string
+	Decimals           uint8
 }
 
 func (ev *SwapPairRegisterEvent) ToSwapPairRegisterLog(log *types.Log) *model.SwapPairRegisterTxLog {
 	pack := &model.SwapPairRegisterTxLog{
 		ERC20Addr: ev.ContractAddr.String(),
+		BEP20Addr: ev.TargetContractAddr.String(),
 		Sponsor:   ev.Sponsor.String(),
 		Symbol:    ev.Symbol,
 		Name:      ev.Name,
@@ -127,12 +130,12 @@ func (ev *SwapPairRegisterEvent) ToSwapPairRegisterLog(log *types.Log) *model.Sw
 func ParseSwapPairRegisterEvent(abi *abi.ABI, log *types.Log) (*SwapPairRegisterEvent, error) {
 	var ev SwapPairRegisterEvent
 
-	err := abi.Unpack(&ev, SwapPairRegisterEventName, log.Data)
+	err := abi.UnpackIntoInterface(&ev, SwapPairRegisterEventName, log.Data)
 	if err != nil {
 		return nil, err
 	}
 	ev.Sponsor = ethcmm.BytesToAddress(log.Topics[1].Bytes())
 	ev.ContractAddr = ethcmm.BytesToAddress(log.Topics[2].Bytes())
-
+	ev.TargetContractAddr = ethcmm.BytesToAddress(log.Topics[3].Bytes())
 	return &ev, nil
 }

@@ -4,6 +4,7 @@
 package abi
 
 import (
+	"errors"
 	"math/big"
 	"strings"
 
@@ -17,18 +18,24 @@ import (
 
 // Reference imports to suppress errors if they are not otherwise used.
 var (
+	_ = errors.New
 	_ = big.NewInt
 	_ = strings.NewReader
 	_ = ethereum.NotFound
-	_ = abi.U256
 	_ = bind.Bind
 	_ = common.Big1
 	_ = types.BloomLookup
 	_ = event.NewSubscription
 )
 
+// ETHSwapAgentMetaData contains all meta data concerning the ETHSwapAgent contract.
+var ETHSwapAgentMetaData = &bind.MetaData{
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"bscTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SwapFilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sponsor\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"}],\"name\":\"SwapPairRegister\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"fromAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeAmount\",\"type\":\"uint256\"}],\"name\":\"SwapStarted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"filledBSCTx\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"addresspayable\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"registeredERC20\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"swapFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"},{\"internalType\":\"addresspayable\",\"name\":\"ownerAddr\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"addresspayable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"setSwapFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"}],\"name\":\"registerSwapPairToBSC\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"bscTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fillBSC2ETHSwap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"swapETH2BSC\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
+}
+
 // ETHSwapAgentABI is the input ABI used to generate the binding from.
-const ETHSwapAgentABI = "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"bscTxHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"SwapFilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sponsor\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"}],\"name\":\"SwapPairRegister\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"fromAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeAmount\",\"type\":\"uint256\"}],\"name\":\"SwapStarted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"filledBSCTx\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"addresspayable\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"registeredERC20\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"swapFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"},{\"internalType\":\"addresspayable\",\"name\":\"ownerAddr\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"addresspayable\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fee\",\"type\":\"uint256\"}],\"name\":\"setSwapFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"}],\"name\":\"registerSwapPairToBSC\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"bscTxHash\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"toAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fillBSC2ETHSwap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"erc20Addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"swapETH2BSC\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}]"
+// Deprecated: Use ETHSwapAgentMetaData.ABI instead.
+var ETHSwapAgentABI = ETHSwapAgentMetaData.ABI
 
 // ETHSwapAgent is an auto generated Go binding around an Ethereum contract.
 type ETHSwapAgent struct {
@@ -138,7 +145,7 @@ func bindETHSwapAgent(address common.Address, caller bind.ContractCaller, transa
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_ETHSwapAgent *ETHSwapAgentRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_ETHSwapAgent *ETHSwapAgentRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _ETHSwapAgent.Contract.ETHSwapAgentCaller.contract.Call(opts, result, method, params...)
 }
 
@@ -157,7 +164,7 @@ func (_ETHSwapAgent *ETHSwapAgentRaw) Transact(opts *bind.TransactOpts, method s
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_ETHSwapAgent *ETHSwapAgentCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_ETHSwapAgent *ETHSwapAgentCallerRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _ETHSwapAgent.Contract.contract.Call(opts, result, method, params...)
 }
 
@@ -174,104 +181,124 @@ func (_ETHSwapAgent *ETHSwapAgentTransactorRaw) Transact(opts *bind.TransactOpts
 
 // FilledBSCTx is a free data retrieval call binding the contract method 0x50877c77.
 //
-// Solidity: function filledBSCTx(bytes32 ) constant returns(bool)
+// Solidity: function filledBSCTx(bytes32 ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentCaller) FilledBSCTx(opts *bind.CallOpts, arg0 [32]byte) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ETHSwapAgent.contract.Call(opts, out, "filledBSCTx", arg0)
-	return *ret0, err
+	var out []interface{}
+	err := _ETHSwapAgent.contract.Call(opts, &out, "filledBSCTx", arg0)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
 }
 
 // FilledBSCTx is a free data retrieval call binding the contract method 0x50877c77.
 //
-// Solidity: function filledBSCTx(bytes32 ) constant returns(bool)
+// Solidity: function filledBSCTx(bytes32 ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentSession) FilledBSCTx(arg0 [32]byte) (bool, error) {
 	return _ETHSwapAgent.Contract.FilledBSCTx(&_ETHSwapAgent.CallOpts, arg0)
 }
 
 // FilledBSCTx is a free data retrieval call binding the contract method 0x50877c77.
 //
-// Solidity: function filledBSCTx(bytes32 ) constant returns(bool)
+// Solidity: function filledBSCTx(bytes32 ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentCallerSession) FilledBSCTx(arg0 [32]byte) (bool, error) {
 	return _ETHSwapAgent.Contract.FilledBSCTx(&_ETHSwapAgent.CallOpts, arg0)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_ETHSwapAgent *ETHSwapAgentCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _ETHSwapAgent.contract.Call(opts, out, "owner")
-	return *ret0, err
+	var out []interface{}
+	err := _ETHSwapAgent.contract.Call(opts, &out, "owner")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_ETHSwapAgent *ETHSwapAgentSession) Owner() (common.Address, error) {
 	return _ETHSwapAgent.Contract.Owner(&_ETHSwapAgent.CallOpts)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
-// Solidity: function owner() constant returns(address)
+// Solidity: function owner() view returns(address)
 func (_ETHSwapAgent *ETHSwapAgentCallerSession) Owner() (common.Address, error) {
 	return _ETHSwapAgent.Contract.Owner(&_ETHSwapAgent.CallOpts)
 }
 
 // RegisteredERC20 is a free data retrieval call binding the contract method 0x89b15604.
 //
-// Solidity: function registeredERC20(address ) constant returns(bool)
+// Solidity: function registeredERC20(address ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentCaller) RegisteredERC20(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _ETHSwapAgent.contract.Call(opts, out, "registeredERC20", arg0)
-	return *ret0, err
+	var out []interface{}
+	err := _ETHSwapAgent.contract.Call(opts, &out, "registeredERC20", arg0)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
 }
 
 // RegisteredERC20 is a free data retrieval call binding the contract method 0x89b15604.
 //
-// Solidity: function registeredERC20(address ) constant returns(bool)
+// Solidity: function registeredERC20(address ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentSession) RegisteredERC20(arg0 common.Address) (bool, error) {
 	return _ETHSwapAgent.Contract.RegisteredERC20(&_ETHSwapAgent.CallOpts, arg0)
 }
 
 // RegisteredERC20 is a free data retrieval call binding the contract method 0x89b15604.
 //
-// Solidity: function registeredERC20(address ) constant returns(bool)
+// Solidity: function registeredERC20(address ) view returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentCallerSession) RegisteredERC20(arg0 common.Address) (bool, error) {
 	return _ETHSwapAgent.Contract.RegisteredERC20(&_ETHSwapAgent.CallOpts, arg0)
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_ETHSwapAgent *ETHSwapAgentCaller) SwapFee(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _ETHSwapAgent.contract.Call(opts, out, "swapFee")
-	return *ret0, err
+	var out []interface{}
+	err := _ETHSwapAgent.contract.Call(opts, &out, "swapFee")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_ETHSwapAgent *ETHSwapAgentSession) SwapFee() (*big.Int, error) {
 	return _ETHSwapAgent.Contract.SwapFee(&_ETHSwapAgent.CallOpts)
 }
 
 // SwapFee is a free data retrieval call binding the contract method 0x54cf2aeb.
 //
-// Solidity: function swapFee() constant returns(uint256)
+// Solidity: function swapFee() view returns(uint256)
 func (_ETHSwapAgent *ETHSwapAgentCallerSession) SwapFee() (*big.Int, error) {
 	return _ETHSwapAgent.Contract.SwapFee(&_ETHSwapAgent.CallOpts)
 }
@@ -383,21 +410,21 @@ func (_ETHSwapAgent *ETHSwapAgentTransactorSession) SetSwapFee(fee *big.Int) (*t
 
 // SwapETH2BSC is a paid mutator transaction binding the contract method 0xb9927a9c.
 //
-// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) returns(bool)
+// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) payable returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentTransactor) SwapETH2BSC(opts *bind.TransactOpts, erc20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _ETHSwapAgent.contract.Transact(opts, "swapETH2BSC", erc20Addr, amount)
 }
 
 // SwapETH2BSC is a paid mutator transaction binding the contract method 0xb9927a9c.
 //
-// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) returns(bool)
+// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) payable returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentSession) SwapETH2BSC(erc20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _ETHSwapAgent.Contract.SwapETH2BSC(&_ETHSwapAgent.TransactOpts, erc20Addr, amount)
 }
 
 // SwapETH2BSC is a paid mutator transaction binding the contract method 0xb9927a9c.
 //
-// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) returns(bool)
+// Solidity: function swapETH2BSC(address erc20Addr, uint256 amount) payable returns(bool)
 func (_ETHSwapAgent *ETHSwapAgentTransactorSession) SwapETH2BSC(erc20Addr common.Address, amount *big.Int) (*types.Transaction, error) {
 	return _ETHSwapAgent.Contract.SwapETH2BSC(&_ETHSwapAgent.TransactOpts, erc20Addr, amount)
 }
@@ -572,6 +599,7 @@ func (_ETHSwapAgent *ETHSwapAgentFilterer) ParseOwnershipTransferred(log types.L
 	if err := _ETHSwapAgent.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -734,6 +762,7 @@ func (_ETHSwapAgent *ETHSwapAgentFilterer) ParseSwapFilled(log types.Log) (*ETHS
 	if err := _ETHSwapAgent.contract.UnpackLog(event, "SwapFilled", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -889,6 +918,7 @@ func (_ETHSwapAgent *ETHSwapAgentFilterer) ParseSwapPairRegister(log types.Log) 
 	if err := _ETHSwapAgent.contract.UnpackLog(event, "SwapPairRegister", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }
 
@@ -1043,5 +1073,6 @@ func (_ETHSwapAgent *ETHSwapAgentFilterer) ParseSwapStarted(log types.Log) (*ETH
 	if err := _ETHSwapAgent.contract.UnpackLog(event, "SwapStarted", log); err != nil {
 		return nil, err
 	}
+	event.Raw = log
 	return event, nil
 }

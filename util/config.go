@@ -31,6 +31,12 @@ type AlertConfig struct {
 	TelegramChatId string `json:"telegram_chat_id"`
 
 	BlockUpdateTimeout int64 `json:"block_update_timeout"`
+
+	MailSender          string `json:"mail_sender"`
+	MailReceiver        string `json:"mail_receiver"`
+	MailSMTPServer      string `json:"mail_smtp_server"`
+	MailSMTPPort        int    `json:"mail_smtp_port"`
+	MailSenderAuthToken string `json:"mail_sender_auth_token"`
 }
 
 func (cfg AlertConfig) Validate() {
@@ -114,7 +120,7 @@ type ChainConfig struct {
 	BSCSwapAgentAddr            string `json:"bsc_swap_agent_addr"`
 	BSCExplorerUrl              string `json:"bsc_explorer_url"`
 	BSCMaxTrackRetry            int64  `json:"bsc_max_track_retry"`
-	BSCAlertThreshold           string `json:"bsc_alert_threshold"`
+	BSCAlertThreshold           int64  `json:"bsc_alert_threshold"`
 	BSCWaitMilliSecBetweenSwaps int64  `json:"bsc_wait_milli_sec_between_swaps"`
 
 	ETHObserverFetchInterval    int64  `json:"eth_observer_fetch_interval"`
@@ -124,7 +130,7 @@ type ChainConfig struct {
 	ETHSwapAgentAddr            string `json:"eth_swap_agent_addr"`
 	ETHExplorerUrl              string `json:"eth_explorer_url"`
 	ETHMaxTrackRetry            int64  `json:"eth_max_track_retry"`
-	ETHAlertThreshold           string `json:"eth_alert_threshold"`
+	ETHAlertThreshold           int64  `json:"eth_alert_threshold"`
 	ETHWaitMilliSecBetweenSwaps int64  `json:"eth_wait_milli_sec_between_swaps"`
 }
 

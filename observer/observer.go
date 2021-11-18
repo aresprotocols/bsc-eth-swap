@@ -2,6 +2,8 @@ package observer
 
 import (
 	"fmt"
+	ethcmm "github.com/ethereum/go-ethereum/common"
+	"math/big"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -18,20 +20,29 @@ type Observer struct {
 	StartHeight int64
 	ConfirmNum  int64
 
-	Config   *util.Config
-	Executor executor.Executor
+	Config        *util.Config
+	Executor      executor.Executor
+	SwapAgentAddr ethcmm.Address
 }
 
 // NewObserver returns the observer instance
 func NewObserver(db *gorm.DB, startHeight, confirmNum int64, cfg *util.Config, executor executor.Executor) *Observer {
+	agentAddr := ethcmm.Address{}
+	if executor.GetChainName() == common.ChainBSC {
+		agentAddr = ethcmm.HexToAddress(cfg.ChainConfig.BSCSwapAgentAddr)
+	} else if executor.GetChainName() == common.ChainETH {
+		agentAddr = ethcmm.HexToAddress(cfg.ChainConfig.ETHSwapAgentAddr)
+	}
+
 	return &Observer{
 		DB: db,
 
 		StartHeight: startHeight,
 		ConfirmNum:  confirmNum,
 
-		Config:   cfg,
-		Executor: executor,
+		Config:        cfg,
+		Executor:      executor,
+		SwapAgentAddr: agentAddr,
 	}
 }
 
@@ -40,6 +51,7 @@ func (ob *Observer) Start() {
 	go ob.Fetch(ob.StartHeight)
 	go ob.Prune()
 	go ob.Alert()
+	go ob.CheckContractBalance()
 }
 
 func (ob *Observer) fetchSleep() {
@@ -264,5 +276,55 @@ func (ob *Observer) Alert() {
 		}
 
 		time.Sleep(common.ObserverAlertInterval)
+	}
+}
+
+func (ob *Observer) CheckContractBalance() {
+	subject := "Token balance is not enough"
+	chainName := ob.Executor.GetChainName()
+	explorerUrl := ob.Executor.GetExplorerUrl()
+	alertThreshold := big.NewInt(0)
+	if chainName == common.ChainBSC {
+		alertThreshold = big.NewInt(ob.Config.ChainConfig.BSCAlertThreshold)
+	} else if chainName == common.ChainETH {
+		alertThreshold = big.NewInt(ob.Config.ChainConfig.ETHAlertThreshold)
+	}
+	for {
+		var pairs []model.SwapPair
+		err := ob.DB.Model(model.SwapPair{}).Where("available = ? ", true).Find(&pairs).Error
+		if err != nil {
+			util.Logger.Errorf("query swap pair logs error, err=%s", err.Error())
+			time.Sleep(common.ObserverBalanceInterval)
+		}
+		for _, swapPair := range pairs {
+			decimals := big.NewInt(int64(swapPair.Decimals))
+			tokenAlertThreshold := big.NewInt(10)
+			contractAddr := ethcmm.Address{}
+			if chainName == common.ChainBSC {
+				contractAddr = ethcmm.HexToAddress(swapPair.BEP20Addr)
+			} else if chainName == common.ChainETH {
+				contractAddr = ethcmm.HexToAddress(swapPair.ERC20Addr)
+			}
+			tokenAlertThreshold.Exp(tokenAlertThreshold, decimals, nil) // 10^18
+			tokenAlertThreshold.Mul(alertThreshold, tokenAlertThreshold)
+			who := ob.SwapAgentAddr
+			balance, err := ob.Executor.GetTokenBalance(contractAddr, who)
+			if err != nil {
+				util.Logger.Infof("get token balance logs error. chain=%s, contract=%s, err=%s", chainName, contractAddr, err.Error())
+				continue
+			}
+			if balance.Cmp(tokenAlertThreshold) == -1 {
+				explorer := fmt.Sprintf("%s/token/%s?a=%s", explorerUrl, contractAddr, who)
+				bodyTemplate := `<h1>chain: %s</h1>
+							<p></p>
+							<h1>who: %s</h1>
+							<h1>token: %s</h1>
+							<h1>balance: %s</h1>
+							<div>explorer: %s</div`
+				body := fmt.Sprintf(bodyTemplate, chainName, who, contractAddr, balance, explorer)
+				util.SendMailMessage(subject, body)
+			}
+		}
+		time.Sleep(common.ObserverBalanceInterval)
 	}
 }

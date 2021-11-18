@@ -2,6 +2,7 @@ package executor
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 	"strings"
 	"time"
@@ -53,6 +54,10 @@ func (e *BscExecutor) GetChainName() string {
 	return e.Chain
 }
 
+func (e *BscExecutor) GetExplorerUrl() string {
+	return e.Config.ChainConfig.BSCExplorerUrl
+}
+
 func (e *BscExecutor) GetBlockAndTxEvents(height int64) (*common.BlockAndEventLogs, error) {
 	ctxWithTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -64,6 +69,7 @@ func (e *BscExecutor) GetBlockAndTxEvents(height int64) (*common.BlockAndEventLo
 
 	packageLogs, err := e.GetLogs(header)
 	if err != nil {
+		fmt.Printf("bsc number: %s, hash: %s  \n", header.Number.String(), header.Hash().String())
 		return nil, err
 	}
 
@@ -76,6 +82,19 @@ func (e *BscExecutor) GetBlockAndTxEvents(height int64) (*common.BlockAndEventLo
 		Events:          packageLogs,
 	}, nil
 }
+
+func (e *BscExecutor) GetTokenBalance(contract ethcmm.Address, who ethcmm.Address) (*big.Int, error) {
+	erc20Inst, err := contractabi.NewERC20(contract, e.Client)
+	if err != nil {
+		return nil, err
+	}
+	balance, err := erc20Inst.BalanceOf(nil, who)
+	if err != nil {
+		return nil, err
+	}
+	return balance, nil
+}
+
 func (e *BscExecutor) GetLogs(header *types.Header) ([]interface{}, error) {
 	return e.GetSwapStartLogs(header)
 }

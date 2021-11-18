@@ -2,6 +2,7 @@ package executor
 
 import (
 	"context"
+	"fmt"
 	"github.com/ethereum/go-ethereum"
 	"math/big"
 	"strings"
@@ -52,6 +53,10 @@ func (e *EthExecutor) GetChainName() string {
 	return e.Chain
 }
 
+func (e *EthExecutor) GetExplorerUrl() string {
+	return e.Config.ChainConfig.ETHExplorerUrl
+}
+
 func (e *EthExecutor) GetBlockAndTxEvents(height int64) (*common.BlockAndEventLogs, error) {
 	ctxWithTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -76,13 +81,27 @@ func (e *EthExecutor) GetBlockAndTxEvents(height int64) (*common.BlockAndEventLo
 	}, nil
 }
 
+func (e *EthExecutor) GetTokenBalance(contract ethcmm.Address, who ethcmm.Address) (*big.Int, error) {
+	erc20Inst, err := contractabi.NewERC20(contract, e.Client)
+	if err != nil {
+		return nil, err
+	}
+	balance, err := erc20Inst.BalanceOf(nil, who)
+	if err != nil {
+		return nil, err
+	}
+	return balance, nil
+}
+
 func (e *EthExecutor) GetLogs(header *types.Header) ([]interface{}, error) {
 	startEvs, err := e.GetSwapStartLogs(header)
 	if err != nil {
+		fmt.Printf("1.error eth number: %s, hash: %s  \n", header.Number.String(), header.Hash().String())
 		return nil, err
 	}
 	regiserEvs, err := e.GetSwapPairRegisterLogs(header)
 	if err != nil {
+		fmt.Printf("2.error eth number: %s, hash: %s  \n", header.Number.String(), header.Hash().String())
 		return nil, err
 	}
 	var res = make([]interface{}, 0, len(startEvs)+len(regiserEvs))
@@ -121,7 +140,7 @@ func (e *EthExecutor) GetSwapPairRegisterLogs(header *types.Header) ([]interface
 
 		eventModel := event.ToSwapPairRegisterLog(&log)
 		eventModel.Chain = e.Chain
-		util.Logger.Debugf("Found register event, erc20 address: %d, name: %s, symbol: %s, decimals: %d",
+		util.Logger.Infof("Found register event, erc20 address: %d, name: %s, symbol: %s, decimals: %d",
 			eventModel.ERC20Addr, eventModel.Name, eventModel.Symbol, eventModel.Decimals)
 		eventModels = append(eventModels, eventModel)
 	}

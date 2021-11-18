@@ -4,8 +4,8 @@
     "aws_region": "",
     "aws_secret_name": "",
     "local_hmac_key": "",
-    "local_bsc_private_key": "",
-    "local_eth_private_key": ""
+    "local_bsc_private_key": "./keys/keyfile.json",
+    "local_eth_private_key": "./keys/keyfile.json"
   },
   "db_config": {
     "dialect": "sqlite3",
@@ -13,23 +13,23 @@
   },
   "chain_config": {
     "balance_monitor_interval": 60,
-    "bsc_observer_fetch_interval": 1,
-    "bsc_start_height": 6010146,
-    "bsc_provider": "https://data-seed-prebsc-1-s3.binance.org:8545",
-    "bsc_confirm_num": 2,
-    "bsc_swap_agent_addr": "",
-    "bsc_explorer_url": "https://testnet.bscscan.com/tx",
+    "bsc_observer_fetch_interval": 10,
+    "bsc_start_height": 14213740,
+    "bsc_provider": "https://data-seed-prebsc-1-s1.binance.org:8545",
+    "bsc_confirm_num": 10,
+    "bsc_swap_agent_addr": "0x692cB77F1F379CeD42E3f5Ce88A3504d4DFf89ca",
+    "bsc_explorer_url": "https://testnet.bscscan.com",
     "bsc_max_track_retry": 60,
-    "bnb_alert_threshold": "1000000000000000000",
+    "bsc_alert_threshold": 120000,
     "bsc_wait_milli_sec_between_swaps": 100,
     "eth_observer_fetch_interval": 10,
-    "eth_start_height": 8018001,
-    "eth_provider": "",
-    "eth_confirm_num": 1,
-    "eth_swap_agent_addr": "",
-    "eth_explorer_url": "https://rinkeby.etherscan.io/tx",
+    "eth_start_height": 10108120,
+    "eth_provider": "https://http-testnet.hecochain.com",
+    "eth_confirm_num": 10,
+    "eth_swap_agent_addr": "0x06893a36510957C0944fF57f66F327c0A796f005",
+    "eth_explorer_url": "https://testnet.hecoinfo.com",
     "eth_max_track_retry": 600,
-    "eth_alert_threshold": "1000000000000000000",
+    "eth_alert_threshold": 120000,
     "eth_wait_milli_sec_between_swaps": 200
   },
   "log_config": {
@@ -45,7 +45,12 @@
   "alert_config": {
     "telegram_bot_id": "",
     "telegram_chat_id": "",
-    "block_update_timeout": 10
+    "block_update_timeout": 10,
+    "mail_sender": "1032087738@qq.com",
+    "mail_sender_auth_token": "",
+    "mail_receiver": "",
+    "mail_smtp_server": "smtp.qq.com",
+    "mail_smtp_port": 587
   },
   "admin_config": {
     "listen_addr": ":8000"

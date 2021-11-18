@@ -106,12 +106,13 @@ func (engine *SwapPairEngine) createSwapPairSM(txEventLog *model.SwapPairRegiste
 	swapPairRegisterTxHash := txEventLog.TxHash
 
 	ethContractAddr := ethcom.HexToAddress(txEventLog.ERC20Addr)
+	bscContractAddr := ethcom.HexToAddress(txEventLog.BEP20Addr)
 	swapPairStatus := SwapPairReceived
 	// TODO, duplicate check
 	swapSM := &model.SwapPairStateMachine{
 		Status:    swapPairStatus,
 		ERC20Addr: ethContractAddr.String(),
-		BEP20Addr: "",
+		BEP20Addr: bscContractAddr.String(),
 		Sponsor:   txEventLog.Sponsor,
 		Symbol:    txEventLog.Symbol,
 		Name:      txEventLog.Name,
@@ -338,7 +339,7 @@ func (engine *SwapPairEngine) doCreateSwapPair(swapPairSM *model.SwapPairStateMa
 
 	bscClientMutex.Lock()
 	defer bscClientMutex.Unlock()
-	data, err := abiEncodeCreateSwapPair(ethcom.HexToHash(swapPairSM.PairRegisterTxHash), ethcom.HexToAddress(swapPairSM.ERC20Addr), swapPairSM.Name, swapPairSM.Symbol, uint8(swapPairSM.Decimals), engine.bscSwapAgentABi)
+	data, err := abiEncodeCreateSwapPair(ethcom.HexToHash(swapPairSM.PairRegisterTxHash), ethcom.HexToAddress(swapPairSM.ERC20Addr), ethcom.HexToAddress(swapPairSM.BEP20Addr), engine.bscSwapAgentABi)
 	if err != nil {
 		return nil, err
 	}
@@ -350,6 +351,7 @@ func (engine *SwapPairEngine) doCreateSwapPair(swapPairSM *model.SwapPairStateMa
 		SwapPairRegisterTxHash: swapPairSM.PairRegisterTxHash,
 		SwapPairCreatTxHash:    signedTx.Hash().String(),
 		ERC20Addr:              swapPairSM.ERC20Addr,
+		BEP20Addr:              swapPairSM.BEP20Addr,
 		Symbol:                 swapPairSM.Symbol,
 		Name:                   swapPairSM.Name,
 		Decimals:               swapPairSM.Decimals,
@@ -365,7 +367,7 @@ func (engine *SwapPairEngine) doCreateSwapPair(swapPairSM *model.SwapPairStateMa
 		util.Logger.Errorf("broadcast tx to BSC error: %s", err.Error())
 		return nil, err
 	}
-	util.Logger.Infof("Send transaction to BSC, %s/%s", engine.config.ChainConfig.BSCExplorerUrl, signedTx.Hash().String())
+	util.Logger.Infof("Send transaction to BSC, %s/tx/%s", engine.config.ChainConfig.BSCExplorerUrl, signedTx.Hash().String())
 	return swapTx, nil
 }
 
@@ -502,15 +504,15 @@ func (engine *SwapPairEngine) trackSwapPairTxDaemon() {
 							swapPairSM.Log = "create swapPairSM pair tx is failed"
 							engine.updateSwapPairSM(tx, swapPairSM)
 						} else {
-							bep20ContractAddr, err := queryDeployedBEP20ContractAddr(
-								ethcom.HexToAddress(swapPairTx.ERC20Addr),
-								ethcom.HexToAddress(engine.config.ChainConfig.BSCSwapAgentAddr),
-								txRecipient,
-								engine.bscClient)
-							if err != nil {
-								tx.Rollback()
-								return err
-							}
+							//bep20ContractAddr, err := queryDeployedBEP20ContractAddr(
+							//	ethcom.HexToAddress(swapPairTx.ERC20Addr),
+							//	ethcom.HexToAddress(engine.config.ChainConfig.BSCSwapAgentAddr),
+							//	txRecipient,
+							//	engine.bscClient)
+							//if err != nil {
+							//	tx.Rollback()
+							//	return err
+							//}
 							tx.Model(model.SwapPairCreatTx{}).Where("id = ?", swapPairTx.ID).Updates(
 								map[string]interface{}{
 									"status":              model.FillTxSuccess,
@@ -525,7 +527,7 @@ func (engine *SwapPairEngine) trackSwapPairTxDaemon() {
 								return err
 							}
 							swapPairSM.Status = SwapPairSuccess
-							swapPairSM.BEP20Addr = bep20ContractAddr.String()
+							//swapPairSM.BEP20Addr = bep20ContractAddr.String()
 							engine.updateSwapPairSM(tx, swapPairSM)
 						}
 					}

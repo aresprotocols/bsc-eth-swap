@@ -3,9 +3,10 @@ package common
 import "time"
 
 const (
-	ObserverMaxBlockNumber = 10000
-	ObserverPruneInterval  = 10 * time.Second
-	ObserverAlertInterval  = 5 * time.Second
+	ObserverMaxBlockNumber  = 10000
+	ObserverPruneInterval   = 10 * time.Second
+	ObserverAlertInterval   = 5 * time.Second
+	ObserverBalanceInterval = 60 * time.Second
 
 	ChainBSC = "BSC" // binance smart chain
 	ChainETH = "ETH" // ethereum

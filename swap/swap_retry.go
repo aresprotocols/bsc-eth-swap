@@ -110,7 +110,7 @@ func (engine *SwapEngine) doRetrySwap(retrySwap *model.RetrySwap, swapPairInstan
 			util.Logger.Errorf("broadcast tx to BSC error: %s", err.Error())
 			return nil, err
 		}
-		util.Logger.Infof("Send transaction to BSC, %s/%s", engine.config.ChainConfig.BSCExplorerUrl, signedTx.Hash().String())
+		util.Logger.Infof("Send transaction to BSC, %s/tx/%s", engine.config.ChainConfig.BSCExplorerUrl, signedTx.Hash().String())
 		return retrySwapTx, nil
 	} else {
 		ethClientMutex.Lock()
@@ -136,7 +136,7 @@ func (engine *SwapEngine) doRetrySwap(retrySwap *model.RetrySwap, swapPairInstan
 			util.Logger.Errorf("broadcast tx to ETH error: %s", err.Error())
 			return nil, err
 		} else {
-			util.Logger.Infof("Send transaction to ETH, %s/%s", engine.config.ChainConfig.ETHExplorerUrl, signedTx.Hash().String())
+			util.Logger.Infof("Send transaction to ETH, %s/tx/%s", engine.config.ChainConfig.ETHExplorerUrl, signedTx.Hash().String())
 		}
 		return retrySwapTx, nil
 	}

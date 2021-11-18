@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"github.com/binance-chain/bsc-eth-swap/admin"
 
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -97,6 +96,7 @@ func main() {
 	// init logger
 	util.InitLogger(config.LogConfig)
 	util.InitTgAlerter(config.AlertConfig)
+	util.InitMailAlerter(config.AlertConfig)
 
 	db, err := gorm.Open(config.DBConfig.Dialect, config.DBConfig.DBPath)
 	if err != nil {
